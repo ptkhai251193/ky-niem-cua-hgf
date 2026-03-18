@@ -134,3 +134,25 @@ header {
 .form-group { margin-bottom: 15px; }
 .form-group input { width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ddd; box-sizing: border-box; }
 .btn-save { width: 100%; padding: 12px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
+/* ĐỊNH VỊ LOGO ĐỘI BÓNG Ở GÓC TRÁI MÀN HÌNH */
+.team-logo {
+    position: fixed; /* Giữ logo cố định khi cuộn trang */
+    top: 20px;       /* Cách mép trên màn hình 20px */
+    left: 20px;      /* Cách mép trái màn hình 20px */
+    
+    width: 80px;     /* Chiều rộng của logo (bạn có thể tăng giảm) */
+    height: auto;    /* Chiều cao tự động điều chỉnh theo tỉ lệ ảnh */
+    
+    z-index: 1000;   /* Đảm bảo logo nằm trên các lớp khác (trừ modal) */
+    
+    border-radius: 50%; /* Làm bo tròn logo (nếu logo hình tròn) */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5); /* Thêm bóng đổ cho nổi bật */
+    
+    /* Hiệu ứng khi di chuột vào */
+    transition: transform 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.team-logo:hover {
+    transform: scale(1.1); /* Phóng to nhẹ khi di chuột vào */
+}
