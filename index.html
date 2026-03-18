@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Kỷ Niệm</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📸 Kỷ Niệm Của Chúng Ta</h1>
+            <button id="btnOpen" class="btn-add">➕ Thêm Album Mới</button>
+        </header>
+
+        <div id="memoryList" class="grid-container">
+            </div>
+    </div>
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Tạo Album Mới</h2>
+            <form id="memoryForm">
+                <div class="form-group">
+                    <label>Ngày kỷ niệm:</label>
+                    <input type="date" id="date" required>
+                </div>
+                <div class="form-group">
+                    <label>Tên Album:</label>
+                    <input type="text" id="content" placeholder="Ví dụ: Đi chơi Vũng Tàu" required>
+                </div>
+                <div class="form-group">
+                    <label>Người đăng:</label>
+                    <input type="text" id="author" placeholder="Tên của bạn" required>
+                </div>
+                <div class="form-group">
+                    <label>Chọn ảnh (có thể chọn nhiều):</label>
+                    <input type="file" id="imageInput" accept="image/*" multiple required>
+                </div>
+                <button type="submit" class="btn-save">Lưu Album</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="albumOverlay" class="album-overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:1000; overflow-y:auto; padding:20px;">
+        <span class="close-album" onclick="closeAlbum()" style="position:fixed; top:20px; right:30px; color:white; font-size:40px; cursor:pointer;">&times;</span>
+        <h2 id="albumTitle" style="color:white; text-align:center; margin-bottom:20px;"></h2>
+        <div id="albumGrid" style="max-width:800px; margin:0 auto;"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="script.js"></script>
+</body>
+</html>
