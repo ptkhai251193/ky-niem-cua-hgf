@@ -24,7 +24,7 @@ header {
 .logo-area { display: flex; align-items: center; gap: 15px; }
 
 .header-logo {
-    width: 65px; height: 65px; object-fit: contain;
+    width: 100px; height: 100px; object-fit: contain;
     filter: drop-shadow(0 2px 5px rgba(0,0,0,0.2));
 }
 
