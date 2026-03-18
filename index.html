@@ -3,14 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trang Kỷ Niệm</title>
+    <title>Kỷ Niệm Gia Đình</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <img src="hinhnen.jpg" class="full-screen-bg" alt="Background">
+
     <div class="container">
         <header>
             <h1>📸 Kỷ Niệm Của Chúng Ta</h1>
-            <button id="btnOpen" class="btn-add">➕ Thêm Album Mới</button>
+            <button id="btnOpen" class="btn-add">➕ Tạo Album Mới</button>
         </header>
 
         <div id="memoryList" class="grid-container">
@@ -28,14 +30,14 @@
                 </div>
                 <div class="form-group">
                     <label>Tên Album:</label>
-                    <input type="text" id="content" placeholder="Ví dụ: Đi chơi Vũng Tàu" required>
+                    <input type="text" id="content" placeholder="Ví dụ: Sinh nhật bé Bảo An" required>
                 </div>
                 <div class="form-group">
                     <label>Người đăng:</label>
                     <input type="text" id="author" placeholder="Tên của bạn" required>
                 </div>
                 <div class="form-group">
-                    <label>Chọn ảnh (có thể chọn nhiều):</label>
+                    <label>Chọn các ảnh:</label>
                     <input type="file" id="imageInput" accept="image/*" multiple required>
                 </div>
                 <button type="submit" class="btn-save">Lưu Album</button>
@@ -43,10 +45,10 @@
         </div>
     </div>
 
-    <div id="albumOverlay" class="album-overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:1000; overflow-y:auto; padding:20px;">
-        <span class="close-album" onclick="closeAlbum()" style="position:fixed; top:20px; right:30px; color:white; font-size:40px; cursor:pointer;">&times;</span>
+    <div id="albumOverlay" class="album-overlay" style="display:none;">
+        <span class="close-album" onclick="closeAlbum()">&times;</span>
         <h2 id="albumTitle" style="color:white; text-align:center; margin-bottom:20px;"></h2>
-        <div id="albumGrid" style="max-width:800px; margin:0 auto;"></div>
+        <div id="albumGrid"></div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
