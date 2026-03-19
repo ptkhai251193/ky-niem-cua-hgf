@@ -3,34 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HGF - Kỷ Niệm Của Chúng Ta</title>
+    <title>FC HGF</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <img src="logo.png" class="team-logo" alt="Logo đội bóng">
     <img src="hinhnen.jpg" class="full-screen-bg" alt="Background">
 
     <div class="container">
         <header>
-            <div class="logo-area">
-                <img src="logo.png" class="header-logo" alt="Logo HGF">
-                <h1>HGF - Kỷ Niệm Của Chúng Ta</h1>
-            </div>
+            <h1>📸HGF - Kỷ Niệm Của Chúng Ta</h1>
             <button id="btnOpen" class="btn-add">➕ Tạo Album Mới</button>
         </header>
 
-        <div id="memoryList" class="grid-container"></div>
+        <div id="memoryList" class="grid-container">
+            </div>
     </div>
 
     <div id="myModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h2 style="text-align:center;">Tạo Album Mới</h2>
+            <h2>Tạo Album Mới</h2>
             <form id="memoryForm">
-                <div class="form-group"><label>Ngày kỷ niệm:</label><input type="date" id="date" required></div>
-                <div class="form-group"><label>Tên Album:</label><input type="text" id="content" placeholder="Ví dụ: Trận bóng giao hữu" required></div>
-                <div class="form-group"><label>Người đăng:</label><input type="text" id="author" placeholder="Tên của bạn" required></div>
-                <div class="form-group"><label>Chọn ảnh:</label><input type="file" id="imageInput" accept="image/*" multiple required></div>
-                <button type="submit" class="btn-save" id="saveBtn">Lưu Album</button>
+                <div class="form-group">
+                    <label>Ngày kỷ niệm:</label>
+                    <input type="date" id="date" required>
+                </div>
+                <div class="form-group">
+                    <label>Tên Album:</label>
+                    <input type="text" id="content" placeholder="Ví dụ: Sinh nhật bé Bảo An" required>
+                </div>
+                <div class="form-group">
+                    <label>Người đăng:</label>
+                    <input type="text" id="author" placeholder="Tên của bạn" required>
+                </div>
+                <div class="form-group">
+                    <label>Chọn các ảnh:</label>
+                    <input type="file" id="imageInput" accept="image/*" multiple required>
+                </div>
+                <button type="submit" class="btn-save">Lưu Album</button>
             </form>
         </div>
     </div>
