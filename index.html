@@ -18,8 +18,7 @@
             <button id="btnOpen" class="btn-add">➕ Tạo Album Mới</button>
         </header>
 
-        <div id="memoryList" class="grid-container">
-            </div>
+        <div id="memoryList" class="grid-container"></div>
     </div>
 
     <div id="myModal" class="modal">
@@ -28,10 +27,10 @@
             <h2 style="text-align:center;">Tạo Album Mới</h2>
             <form id="memoryForm">
                 <div class="form-group"><label>Ngày kỷ niệm:</label><input type="date" id="date" required></div>
-                <div class="form-group"><label>Tên Album:</label><input type="text" id="content" placeholder="Ví dụ: Trận bóng HGF" required></div>
+                <div class="form-group"><label>Tên Album:</label><input type="text" id="content" placeholder="Ví dụ: Trận bóng giao hữu" required></div>
                 <div class="form-group"><label>Người đăng:</label><input type="text" id="author" placeholder="Tên của bạn" required></div>
-                <div class="form-group"><label>Chọn các ảnh:</label><input type="file" id="imageInput" accept="image/*" multiple required></div>
-                <button type="submit" class="btn-save">Lưu Album</button>
+                <div class="form-group"><label>Chọn ảnh:</label><input type="file" id="imageInput" accept="image/*" multiple required></div>
+                <button type="submit" class="btn-save" id="saveBtn">Lưu Album</button>
             </form>
         </div>
     </div>
