@@ -1,29 +1,21 @@
 const SUPABASE_URL = 'https://pgyelwrwfzbwjpdzatfa.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_8rsGFehOQOiOaXb59y6umQ_m9JAp60H';
+const SUPABASE_KEY = 'sb_publishable_8rsGFehOQOiOaXb59y6umQ_m9JAp60H'; 
 const mySupabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-// THAY ĐỔI MẬT KHẨU TẠI ĐÂY
 const ADMIN_PASSWORD = "khai2026"; 
 
-const modal = document.getElementById("myModal");
-const btnOpen = document.getElementById("btnOpen");
-const spanClose = document.getElementsByClassName("close")[0];
-const form = document.getElementById("memoryForm");
-const memoryList = document.getElementById("memoryList");
-
-// 1. TẢI ALBUM
+// 1. TẢI DỮ LIỆU
 async function loadMemories() {
     try {
         const { data, error } = await mySupabase.from('memories').select('*').order('id', { ascending: false });
-        if (error) return;
-
+        if (error) throw error;
+        
+        const memoryList = document.getElementById("memoryList");
+        if(!memoryList) return;
         memoryList.innerHTML = '';
         const albums = {};
-        data.forEach(item => {
-            if (!albums[item.content]) albums[item.content] = [];
-            albums[item.content].push(item);
-        });
-
+        data.forEach(item => { if (!albums[item.content]) albums[item.content] = []; albums[item.content].push(item); });
+        
         for (const title in albums) {
             const items = albums[title];
             const itemsJson = JSON.stringify(items).replace(/'/g, "&apos;");
@@ -33,96 +25,90 @@ async function loadMemories() {
                 <img src="${items[0].image_url}" onclick='openAlbum(${itemsJson})'>
                 <div class="card-info">
                     <h3>${title}</h3>
-                    <p>📅 Ngày: ${items[0].date}</p>
-                    <p>👤 Đăng bởi: ${items[0].author}</p>
-                    <p>📦 Số lượng: ${items.length} ảnh</p>
-                    <button class="btn-append" onclick="appendImages('${title}', '${items[0].date}', '${items[0].author}')">📷 Thêm Ảnh</button>
-                    <button class="btn-delete" onclick="deleteWithAuth('${title}')">🗑️ Xóa Album</button>
+                    <p style="font-size:12px;">📅 ${items[0].date} - 👤 ${items[0].author}</p>
+                    <button class="btn-append" onclick="appendImages('${title.replace(/'/g, "\\'")}', '${items[0].date}', '${items[0].author}')">📷 Thêm Ảnh</button>
+                    <button class="btn-delete" onclick="deleteWithAuth('${title.replace(/'/g, "\\')}')">🗑️ Xóa</button>
                 </div>`;
             memoryList.appendChild(card);
         }
-    } catch (e) { console.error(e); }
+    } catch (e) { console.error("Lỗi tải trang:", e.message); }
 }
 
-// 2. THÊM ẢNH VÀO ALBUM ĐÃ CÓ
-async function appendImages(albumTitle, albumDate, albumAuthor) {
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.multiple = true;
-    input.accept = 'image/*';
+// 2. THÊM ẢNH (Bảo mật & Fix lỗi đơ)
+async function appendImages(title, date, author) {
+    try {
+        const input = document.createElement('input');
+        input.type = 'file'; input.multiple = true; input.accept = 'image/*';
+        input.onchange = async (e) => {
+            const files = e.target.files;
+            if (!files.length) return;
+            alert(`Đang tải lên ${files.length} ảnh...`);
 
-    input.onchange = async (e) => {
-        const files = e.target.files;
-        if (files.length === 0) return;
-        alert(`Đang tải ${files.length} ảnh lên album "${albumTitle}"...`);
+            for (let file of files) {
+                const fileName = `${Date.now()}_${Math.random().toString(36).substr(2, 5)}.png`;
+                const { error: upErr } = await mySupabase.storage.from('images').upload(fileName, file);
+                if (upErr) { alert("Lỗi kho ảnh: " + upErr.message); return; }
 
-        for (let i = 0; i < files.length; i++) {
-            const file = files[i];
-            const fileName = `${Date.now()}_app_${i}.png`;
-            const { error: upErr } = await mySupabase.storage.from('images').upload(fileName, file);
-            if (!upErr) {
                 const { data: urlData } = mySupabase.storage.from('images').getPublicUrl(fileName);
-                await mySupabase.from('memories').insert([{
-                    date: albumDate, content: albumTitle, author: albumAuthor, image_url: urlData.publicUrl
-                }]);
+                await mySupabase.from('memories').insert([{ date, content: title, author, image_url: urlData.publicUrl }]);
             }
-        }
-        alert("Thêm ảnh thành công!");
-        loadMemories();
-    };
-    input.click();
+            alert("Đã cập nhật album thành công!");
+            loadMemories();
+        };
+        input.click();
+    } catch (err) { alert("Lỗi: " + err.message); }
 }
 
-// 3. XÓA ALBUM CÓ MẬT KHẨU
-async function deleteWithAuth(title) {
-    const pass = prompt("Nhập mật khẩu để xóa:");
-    if (pass === ADMIN_PASSWORD) {
-        if(confirm(`Xóa album "${title}"?`)) {
-            await mySupabase.from('memories').delete().eq('content', title);
+// 3. TẠO ALBUM MỚI
+const memoryForm = document.getElementById("memoryForm");
+if(memoryForm) {
+    memoryForm.onsubmit = async function(e) {
+        e.preventDefault();
+        const saveBtn = document.getElementById("saveBtn");
+        saveBtn.innerText = "Đang xử lý..."; saveBtn.disabled = true;
+
+        try {
+            const files = document.getElementById("imageInput").files;
+            const date = document.getElementById("date").value;
+            const content = document.getElementById("content").value;
+            const author = document.getElementById("author").value;
+
+            for (let file of files) {
+                const fileName = `${Date.now()}_${Math.random().toString(36).substr(2, 5)}.png`;
+                const { error: upErr } = await mySupabase.storage.from('images').upload(fileName, file);
+                if (upErr) throw upErr;
+
+                const { data: urlData } = mySupabase.storage.from('images').getPublicUrl(fileName);
+                await mySupabase.from('memories').insert([{ date, content, author, image_url: urlData.publicUrl }]);
+            }
+            alert("Tạo album thành công!");
+            document.getElementById("myModal").style.display = "none";
+            this.reset();
+        } catch (err) {
+            alert("Lỗi hệ thống: " + err.message);
+        } finally {
+            saveBtn.innerText = "Lưu Album"; saveBtn.disabled = false;
             loadMemories();
         }
-    } else if (pass !== null) { alert("Sai mật khẩu!"); }
+    };
 }
 
-// 4. TẠO ALBUM MỚI
-form.onsubmit = async function(e) {
-    e.preventDefault();
-    const files = document.getElementById("imageInput").files;
-    const date = document.getElementById("date").value;
-    const content = document.getElementById("content").value;
-    const author = document.getElementById("author").value;
-
-    alert("Đang tải album mới lên...");
-    for (let i = 0; i < files.length; i++) {
-        const file = files[i];
-        const fileName = `${Date.now()}_new_${i}.png`;
-        const { error: upErr } = await mySupabase.storage.from('images').upload(fileName, file);
-        if (!upErr) {
-            const { data: urlData } = mySupabase.storage.from('images').getPublicUrl(fileName);
-            await mySupabase.from('memories').insert([{ date, content, author, image_url: urlData.publicUrl }]);
-        }
-    }
-    alert("Tạo album thành công!");
-    modal.style.display = "none";
-    form.reset();
-    loadMemories();
-};
+// 4. ĐÓNG MỞ MODAL
+const btnOpen = document.getElementById("btnOpen");
+const myModal = document.getElementById("myModal");
+if(btnOpen && myModal) {
+    btnOpen.onclick = () => myModal.style.display = "block";
+    document.querySelector(".close").onclick = () => myModal.style.display = "none";
+}
 
 function openAlbum(items) {
     document.getElementById("albumOverlay").style.display = "block";
     document.getElementById("albumTitle").innerText = items[0].content;
-    const grid = document.getElementById("albumGrid");
-    grid.innerHTML = ''; 
-    items.forEach(item => {
-        const img = document.createElement("img");
-        img.src = item.image_url;
-        grid.appendChild(img);
-    });
+    const grid = document.getElementById("albumGrid"); grid.innerHTML = '';
+    items.forEach(item => { const img = document.createElement("img"); img.src = item.image_url; grid.appendChild(img); });
 }
 
 function closeAlbum() { document.getElementById("albumOverlay").style.display = "none"; }
-btnOpen.onclick = () => modal.style.display = "block";
-spanClose.onclick = () => modal.style.display = "none";
-window.onclick = (e) => { if (e.target == modal) modal.style.display = "none"; };
-
-loadMemories();
+async function deleteWithAuth(title) {
+    if (prompt("Mật khẩu xóa:") === ADMIN_PASSWORD) {
+        await mySupabase.from('
