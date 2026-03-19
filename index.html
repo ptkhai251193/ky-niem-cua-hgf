@@ -18,19 +18,18 @@
             <button id="btnOpen" class="btn-add">➕ Tạo Album Mới</button>
         </header>
 
-        <div id="memoryList" class="grid-container">
-            </div>
+        <div id="memoryList" class="grid-container"></div>
     </div>
 
     <div id="myModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h2 style="text-align:center;">Tạo Album Mới</h2>
+            <h2>Tạo Album Mới</h2>
             <form id="memoryForm">
-                <div class="form-group"><label>Ngày kỷ niệm:</label><input type="date" id="date" required></div>
-                <div class="form-group"><label>Tên Album:</label><input type="text" id="content" placeholder="Ví dụ: Trận bóng HGF" required></div>
-                <div class="form-group"><label>Người đăng:</label><input type="text" id="author" placeholder="Tên của bạn" required></div>
-                <div class="form-group"><label>Chọn các ảnh:</label><input type="file" id="imageInput" accept="image/*" multiple required></div>
+                <div class="form-group"><label>Ngày:</label><input type="date" id="date" required></div>
+                <div class="form-group"><label>Tên Album:</label><input type="text" id="content" required></div>
+                <div class="form-group"><label>Người đăng:</label><input type="text" id="author" required></div>
+                <div class="form-group"><label>Ảnh:</label><input type="file" id="imageInput" accept="image/*" multiple required></div>
                 <button type="submit" class="btn-save">Lưu Album</button>
             </form>
         </div>
@@ -38,7 +37,7 @@
 
     <div id="albumOverlay" class="album-overlay" style="display:none;">
         <span class="close-album" onclick="closeAlbum()">&times;</span>
-        <h2 id="albumTitle" style="color:white; text-align:center; margin-bottom:20px;"></h2>
+        <h2 id="albumTitle" style="color:white; text-align:center;"></h2>
         <div id="albumGrid"></div>
     </div>
 

@@ -1,6 +1,5 @@
 body { margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #000; }
 
-/* FIX HÌNH NỀN: Giữ trọn vẹn ảnh gốc */
 .full-screen-bg {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
     object-fit: contain; z-index: -1;
@@ -14,46 +13,49 @@ body { margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, sans-serif; backg
     position: relative; z-index: 1;
 }
 
-/* HEADER CÓ LOGO HGF */
+/* CĂN CHỈNH LOGO VÀ TIÊU ĐỀ */
 header {
-    display: flex; justify-content: space-between; align-items: center;
-    margin-bottom: 30px; padding-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
     border-bottom: 2px solid rgba(0,0,0,0.1);
 }
 
-.logo-area { display: flex; align-items: center; gap: 15px; }
-
-.header-logo {
-    width: 65px; height: 65px; object-fit: contain;
-    filter: drop-shadow(0 2px 5px rgba(0,0,0,0.2));
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Khoảng cách giữa logo và chữ */
 }
 
-h1 { font-size: 22px; color: #1a1a1a; margin: 0; text-transform: uppercase; letter-spacing: 0.5px; }
+.header-logo {
+    width: 60px; /* Độ to của logo HGF */
+    height: 60px;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+}
+
+h1 {
+    font-size: 24px;
+    color: #2c3e50;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
 
 .btn-add {
     background: #28a745; color: white; border: none;
-    padding: 12px 25px; border-radius: 50px; cursor: pointer; font-weight: bold;
-    transition: 0.3s;
+    padding: 10px 20px; border-radius: 50px; cursor: pointer; font-weight: bold;
 }
-.btn-add:hover { transform: scale(1.05); background: #218838; }
 
-/* CARD & GRID */
+/* Các phần CSS khác (Card, Grid, Modal, Album Overlay) giữ nguyên như code trước */
 .grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; }
 .card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
 .card img { width: 100%; height: 200px; object-fit: cover; cursor: pointer; }
 .card-info { padding: 15px; }
-
-/* NÚT CHỨC NĂNG */
-.btn-append {
-    background: #3498db; color: white; border: none; padding: 10px;
-    width: 100%; border-radius: 8px; cursor: pointer; font-weight: bold; margin-bottom: 8px;
-}
-.btn-delete {
-    background: #ff4757; color: white; border: none; padding: 8px;
-    width: 100%; border-radius: 8px; cursor: pointer; font-size: 13px;
-}
-
-/* MODAL & OVERLAY */
+.btn-append { background: #3498db; color: white; border: none; padding: 10px; width: 100%; border-radius: 8px; cursor: pointer; font-weight: bold; margin-bottom: 8px; }
+.btn-delete { background: #ff4757; color: white; border: none; padding: 8px; width: 100%; border-radius: 8px; cursor: pointer; font-size: 13px; }
 .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); }
 .modal-content { background: white; margin: 5% auto; padding: 30px; width: 90%; max-width: 400px; border-radius: 15px; position: relative; }
 .close { position: absolute; right: 20px; top: 10px; font-size: 25px; cursor: pointer; }
@@ -61,7 +63,6 @@ h1 { font-size: 22px; color: #1a1a1a; margin: 0; text-transform: uppercase; lett
 #albumGrid { max-width: 800px; margin: 0 auto; display: grid; gap: 20px; }
 #albumGrid img { width: 100%; border-radius: 10px; }
 .close-album { position: fixed; top: 10px; right: 20px; color: white; font-size: 40px; cursor: pointer; }
-
 .form-group { margin-bottom: 15px; }
 .form-group input { width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ddd; box-sizing: border-box; }
-.btn-save { width: 100%; padding: 12px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
+.btn-save { width: 100%; padding: 12px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
