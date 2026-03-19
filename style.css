@@ -41,7 +41,11 @@ header {
 .logo-area { display: flex; align-items: center; gap: 15px; }
 
 .header-logo {
+<<<<<<< HEAD
     width: 100px; height: px; object-fit: contain;
+=======
+    width: 65px; height: 65px; object-fit: contain;
+>>>>>>> parent of b99d63d (Update style.css)
     filter: drop-shadow(0 2px 5px rgba(0,0,0,0.2));
 }
 
